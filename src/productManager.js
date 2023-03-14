@@ -12,7 +12,7 @@ function makeCode(length) {
     }
     return result;
 }*/
-//const fs = require('fs');
+
 
 import fs from "fs";
 
@@ -24,53 +24,57 @@ class ProductManager{
         this.path = 'products.txt';
     }
 
-    async addProduct(title, description, price, thumbnail, code, stock){
+    async addProduct(product){
         try {   
             if (fs.existsSync(this.path)) {
                 let data = await fs.promises.readFile(this.path, 'utf-8');
                 const productsArray = JSON.parse(data);
                 let productId = productsArray.length;
                 
-                if (!title || !description || !price || !thumbnail || !code || !stock) {
+                if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
                     return console.log("error")
                 } else {
                     //const id = this.products.lenght == 0 ? 1 : this.products[this.products.lenght - 1] + 1;
-                    const product = {
+                    const productData = {
                         id: productId + 1,
-                        title: title,
-                        description: description,
-                        price: price,
-                        code: code,
-                        thumbnail: thumbnail,
-                        stock: stock,
+                        title: product.title,
+                        description: product.description,
+                        price: product.price,
+                        code: product.code,
+                        thumbnail: product.thumbnail,
+                        stock: product.stock,
+                        status: true,
+                        category: product.category,
                     };
                     
-                    if (productsArray.some(prod => prod.code === product.code)) {
+                    if (productsArray.some(prod => prod.code === productData.code) && productsArray.some(prod => prod.title.toLowerCase() === productData.title.toLowerCase())) {
                         return console.log({ status: 'error', message: 'the product already exists' })
                     } else {
-                        productsArray.push(product);
+                        productsArray.push(productData);
                         await fs.promises.writeFile(this.path, JSON.stringify(productsArray, null, 2));
                         return productsArray;
                     }
                 }
                 
             } else {
-                if (!title || !description || !price || !thumbnail || !code || !stock) {
+                if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
                     return console.log("error")
                 } else {
                     //const id = this.products.lenght == 0 ? 1 : this.products[this.products.lenght - 1] + 1;
-                    const product = {
+                    const productData = {
                         id: 1,
-                        title: title,
-                        description: description,
-                        price: price,
-                        code: code,
-                        thumbnail: thumbnail,
-                        stock: stock,
+                        title: product.title,
+                        description: product.description,
+                        price: product.price,
+                        code: product.code,
+                        thumbnail: product.thumbnail,
+                        stock: product.stock,
+                        status: true,
+                        category: product.category,
                     };
 
-                    await fs.promises.writeFile(this.path, JSON.stringify([product], null, 2));
-                    return product;
+                    await fs.promises.writeFile(this.path, JSON.stringify([productData], null, 2));
+                    return productData;
                 }
             }    
             
@@ -114,6 +118,8 @@ class ProductManager{
             code: obj.code,
             thumbnail: obj.thumbnail,
             stock: obj.stock,
+            status: obj.status,
+            category: obj.category,
         }
         try {
             let data = await fs.promises.readFile(this.path, 'utf-8');
@@ -143,31 +149,3 @@ class ProductManager{
 
 export default ProductManager;
 
-//const product1 = new ProductManager();
-
-//console.log(product1.getProducts());
-
-//product1.addProduct("producto prueba", "Este es un producto prueba", 200, "Sin imagen", "abc123", 25);
-
-/*product1.getProducts().then(result => {
-    console.log(result)
-})
-
-product1.getProductById(2).then(result => {
-    console.log(result)
-})
-
-product1.updateProduct(2, { title: "producto prueba act", description: "Este es un producto prueba actualizado", price: 220, code: "abc23", thumbnail: "Sin imagen", stock: 30}).then(result => {
-    console.log(result)
-})
-
-product1.deleteProduct(2).then(result => {
-    console.log(result)
-})*/
-
-
-//console.log(product1.getProducts());
-
-//product1.addProduct("producto prueba", "Este es un producto prueba", 200, "Sin imagen", "abc23", 25);
-
-// console.log(product1.getProducts());
