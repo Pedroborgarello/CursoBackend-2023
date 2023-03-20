@@ -16,7 +16,7 @@ class CartManager {
                 } else { 
                     let dataCart = {
                         id: cartId + 1,
-                        products: cart
+                        products: [cart]
                     }
                     carts.push(dataCart);
                     await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2));
@@ -25,7 +25,7 @@ class CartManager {
             } else {
                 let dataCart = {
                     id: 1,
-                    products: cart
+                    products: [cart]
                 }
                 await fs.promises.writeFile(this.path, JSON.stringify([dataCart], null, 2))
                 return { status: 'success', message: `cart successfully, id: ${dataCart.id}`, id: `${dataCart.id}` }

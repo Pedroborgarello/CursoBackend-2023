@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:pid', (req, res) => {
-    let id = req.params.id;
+    let id = req.params.pid;
     id = parseInt(id);
     let body = req.body;
     productManager.updateProduct(id, body).then(result => {
@@ -45,7 +45,7 @@ router.put('/:pid', (req, res) => {
 })
 
 router.delete('/:pid', (req, res) => {
-    let id = req.params.id;
+    let id = req.params.pid;
     id = parseInt(id);
     productManager.deleteProduct(id).then(result => {
         res.send(result.message);
