@@ -10,22 +10,26 @@ class CartManager {
             if (fs.existsSync(this.path)) {
                 let data = await fs.promises.readFile(this.path, 'utf-8');
                 let carts = JSON.parse(data);
-                let cartId = carts.lenght;
+                let cartId = carts.length;
                 if (carts.some(cartsArray => parseInt(cartsArray.id) === parseInt(cart.id))) {
                     return { status: 'error', message: 'the cart already exists' }
                 } else { 
                     let dataCart = {
                         id: cartId + 1,
-                        products: [cart]
+                        products: cart
                     }
                     carts.push(dataCart);
-                    await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2));
-                    return { status: 'success', message: `product successfully, id: ${dataCart.id}`, id: `${dataCart.id}` }
+                    try {
+                        await fs.promises.writeFile(this.path, JSON.stringify(carts, null, 2));
+                        return { status: 'success', message: `product successfully, id: ${dataCart.id}`, id: `${dataCart.id}` }                        
+                    } catch (err) {
+                        return { status: 'error', message: 'the cart could not be created:' + err }
+                    }
                 }
             } else {
                 let dataCart = {
                     id: 1,
-                    products: [cart]
+                    products: cart
                 }
                 await fs.promises.writeFile(this.path, JSON.stringify([dataCart], null, 2))
                 return { status: 'success', message: `cart successfully, id: ${dataCart.id}`, id: `${dataCart.id}` }
@@ -57,15 +61,19 @@ class CartManager {
             let cart = carts.find(cartsArray => parseInt(cartsArray.id) === parseInt(cid));
             if (cart) {
                 let products = cart.products;
-                let product = products.find(prodcutsArray => parseInt(prodcutsArray.product) === parseInt(pid));
+                let product = products.find(prodcutsArray => parseInt(prodcutsArray.id) === parseInt(pid));
                 if (product) {
                     product.quantity++;
-                    await fs.promises.writeFile(this.path, JSON.stringify(cart))
+                    await fs.promises.writeFile(this.path, JSON.stringify(carts), null, 2)
                     return { message: 'product add to cart' }
                 } else {
-                    cart.products += body;
-                    await fs.promises.writeFile(this.path, JSON.stringify(cart));
-                    return { product: body, message: 'product add to cart' }
+                    let dataNewProd = {
+                        id: pid,
+                        quantity: body.quantity
+                    }
+                    cart.products.push(dataNewProd);
+                    await fs.promises.writeFile(this.path, JSON.stringify(carts), null, 2);
+                    return { product: dataNewProd , message: 'product add to cart' }
                 }
             } else {
                 return { status: 'error' }

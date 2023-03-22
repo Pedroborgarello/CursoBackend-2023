@@ -1,1 +1,41 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "remera1",
+    "description": "roja",
+    "price": "5000",
+    "code": "123abc",
+    "thumbnail": "no disponible",
+    "stock": "20",
+    "status": true
+  },
+  {
+    "id": 3,
+    "title": "remera3",
+    "description": "amarillo",
+    "price": "5000",
+    "code": "345abc",
+    "thumbnail": "no disponible",
+    "stock": "17",
+    "status": true
+  },
+  {
+    "id": 4,
+    "title": "remera4",
+    "description": "verde",
+    "price": "5000",
+    "code": "456abc",
+    "thumbnail": "no disponible",
+    "stock": "18",
+    "status": true
+  },
+  {
+    "id": 2,
+    "title": "remera2",
+    "description": "azul",
+    "price": "5000",
+    "code": "234abc",
+    "thumbnail": "no disponible",
+    "stock": "30"
+  }
+]
