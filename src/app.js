@@ -1,7 +1,9 @@
 import express from 'express';
-//import ProductManager from './productManager.js';
 import productsRouter from './routes/products.router.js'
 import cartRouter from './routes/carts.router.js'
+import handlebars from 'express-handlebars'
+import { Server } from 'socket.io'
+
 
 // crear __dirname
 import { dirname } from 'path';
@@ -12,7 +14,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT||8080;
 
-//const productManager = new ProductManager();
+//motor de plantillas handlebars
+app.engine('handlebars', handlebars.engine());
+app.set('views', __dirname + '/views');
+app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -20,35 +25,23 @@ app.use(express.urlencoded({extended:true}));
 // public
 app.use(express.static(__dirname + '/public'));
 
-app.listen(PORT, () => {
+// http Server
+const httpServer = app.listen(PORT, () => {
     console.log( 'Server listening on: ' + PORT );
 });
+
+// socket server
+const socketServer = new Server(httpServer);
 
 // routes
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartRouter);
 
-
-/*app.get('/products', (req, res) => {
-    let limit = req.query.limit
-    limit = parseInt(limit)
-    if (limit) {
-        productManager.getProducts().then(result => {
-            const products = result.product;
-            const productsLimit = products.slice(0, limit);
-            res.send(productsLimit);
-        })     
-    } else {
-        productManager.getProducts().then(result => {
-            res.send(result.product);
-        })
-    }
-})
-
-app.get('/products/:pid', (req, res) => {
-    let id = req.params.pid;
-    id = parseInt(id);
-    productManager.getProductById(id).then(result => {
-        res.send(result.product);
+// eventos
+socketServer.on('connection', socket => {
+    console.log('client connected' + socket.id);
+    socket.on('disconnect', () => {
+        console.log('Client disconnected' + socket.id);
     })
-})*/
+    socket.emit('welcome', 'Welcome to chat with sockets');
+})
