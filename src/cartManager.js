@@ -16,7 +16,7 @@ class CartManager {
                 } else { 
                     let dataCart = {
                         id: cartId + 1,
-                        products: cart
+                        products: [cart]
                     }
                     carts.push(dataCart);
                     try {
@@ -29,7 +29,7 @@ class CartManager {
             } else {
                 let dataCart = {
                     id: 1,
-                    products: cart
+                    products: [cart]
                 }
                 await fs.promises.writeFile(this.path, JSON.stringify([dataCart], null, 2))
                 return { status: 'success', message: `cart successfully, id: ${dataCart.id}`, id: `${dataCart.id}` }
@@ -61,7 +61,7 @@ class CartManager {
             let cart = carts.find(cartsArray => parseInt(cartsArray.id) === parseInt(cid));
             if (cart) {
                 let products = cart.products;
-                let product = products.find(prodcutsArray => parseInt(prodcutsArray.id) === parseInt(pid));
+                let product = products.find(prodcutsArray => parseInt(prodcutsArray.product) === parseInt(pid));
                 if (product) {
                     product.quantity++;
                     await fs.promises.writeFile(this.path, JSON.stringify(carts), null, 2)
@@ -69,7 +69,7 @@ class CartManager {
                 } else {
                     let dataNewProd = {
                         id: pid,
-                        quantity: body.quantity
+                        quantity: 1
                     }
                     cart.products.push(dataNewProd);
                     await fs.promises.writeFile(this.path, JSON.stringify(carts), null, 2);
