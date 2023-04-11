@@ -3,6 +3,8 @@ import productsRouter from './routes/products.router.js'
 import cartRouter from './routes/carts.router.js'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
+import ProductManager from './productManager.js'
+import viewsRouter from './routes/views.router.js'
 
 
 // crear __dirname
@@ -36,12 +38,29 @@ const socketServer = new Server(httpServer);
 // routes
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartRouter);
+app.use('/views', viewsRouter);
+
+// Product Manager
+const productManager = new ProductManager()
 
 // eventos
 socketServer.on('connection', socket => {
     console.log('client connected' + socket.id);
+    
     socket.on('disconnect', () => {
         console.log('Client disconnected' + socket.id);
     })
+    
     socket.emit('welcome', 'Welcome to chat with sockets');
+    
+    productManager.getProducts().then(result => {
+        const products = result.product;
+        socket.emit("products", products)
+
+        socket.on("addProduct", data => {
+            productManager.addProduct(data).then( () => {
+                socket.emit("products", products)
+            })    
+        })
+    })
 })

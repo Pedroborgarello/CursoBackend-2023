@@ -7,7 +7,19 @@
     "code": "123abc",
     "thumbnail": "no disponible",
     "stock": "20",
-    "status": true
+    "status": true,
+    "category": "remera"
+  },
+  {
+    "id": 2,
+    "title": "remera2",
+    "description": "azul",
+    "price": "5000",
+    "code": "234abc",
+    "thumbnail": "no disponible",
+    "stock": "30",
+    "status": true,
+    "category": "remera"
   },
   {
     "id": 3,
@@ -17,7 +29,8 @@
     "code": "345abc",
     "thumbnail": "no disponible",
     "stock": "17",
-    "status": true
+    "status": true,
+    "category": "remera"
   },
   {
     "id": 4,
@@ -27,15 +40,7 @@
     "code": "456abc",
     "thumbnail": "no disponible",
     "stock": "18",
-    "status": true
-  },
-  {
-    "id": 2,
-    "title": "remera2",
-    "description": "azul",
-    "price": "5000",
-    "code": "234abc",
-    "thumbnail": "no disponible",
-    "stock": "30"
+    "status": true,
+    "category": "remera"
   }
 ]
