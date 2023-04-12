@@ -42,5 +42,16 @@
     "stock": "18",
     "status": true,
     "category": "remera"
+  },
+  {
+    "id": 5,
+    "title": "remera5",
+    "description": "naranja",
+    "price": 2500,
+    "code": "567abc",
+    "thumbnail": "nada",
+    "stock": 45,
+    "status": true,
+    "category": "remera"
   }
 ]

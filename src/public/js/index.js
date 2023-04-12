@@ -12,6 +12,7 @@ socketClient.on('products', data => {
             <div>${item.description}</div>
             <div>${item.price}</div>
             <img class="img" src='${item.thumbnail || "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg"}'
+            <div>${item.code}</div>
             <div>${item.category}</div>  
             <div>${item.stock}</div>
         `
@@ -29,6 +30,7 @@ form.onsubmit = (e) => {
     const thumbnail = document.getElementById("thumbnail").value;
     const category = document.getElementById("category").value;
     const stock = document.getElementById("stock").value;
+    const code = document.getElementById("code").value;
 
     const product = {
         title: title,
@@ -36,6 +38,7 @@ form.onsubmit = (e) => {
         price: parseInt(price),
         thumbnail: thumbnail,
         stock: parseInt(stock),
+        code: code,
         category: category
     }
 

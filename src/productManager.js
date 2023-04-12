@@ -31,7 +31,7 @@ class ProductManager{
                 const productsArray = JSON.parse(data);
                 let productId = productsArray.length;
                 
-                if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
+                if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock || !product.category) {
                     return console.log("error1")
                 } else {
                     //const id = this.products.lenght == 0 ? 1 : this.products[this.products.lenght - 1] + 1;
@@ -57,7 +57,7 @@ class ProductManager{
                 }
                 
             } else {
-                if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
+                if (!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock || !product.category) {
                     return console.log("error")
                 } else {
                     //const id = this.products.lenght == 0 ? 1 : this.products[this.products.lenght - 1] + 1;
